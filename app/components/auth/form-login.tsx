@@ -18,6 +18,7 @@ import { FormErros } from "../form-erros";
 import { FormSuccess } from "../form-success";
 import { login } from "@/actions/login";
 import { useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
 
 export const FormLogin = () => {
   const form = useForm<zod.infer<typeof LoginShema>>({
@@ -30,13 +31,16 @@ export const FormLogin = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+ 
+  const searchParams = useSearchParams();
+  const urlError = searchParams.get("error") === 'OAuthAccountNotLinked' ? 'Logar a conta com outro providers' : ''
 
   const onSubmit = (values: zod.z.infer<typeof LoginShema>) => {
     setSuccess("");
     setError("");
     startTransition(() => {
       login(values).then(data => {
-        setSuccess(data?.success);
+        //setSuccess(data?.success);
         setError(data?.error);
       });
     });
@@ -83,7 +87,7 @@ export const FormLogin = () => {
               )}
             />
           </div>
-          <FormErros message={error} />
+          <FormErros message={error || urlError} />
           <FormSuccess message={success} />
           <Button className="w-full">Login</Button>
         </form>

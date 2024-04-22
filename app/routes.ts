@@ -12,7 +12,7 @@ export const publicRoutes = ["/"];
  * Exemplos incluem rotas como "/auth/login" e "/auth/register", que são usadas para o processo de login e registro.
  * @type {string[]}
  */
-export const authRoutes = ["/auth/login", "/auth/register"];
+export const authRoutes = ["/auth/login", "/auth/register", '/auth/error'];
 
 /**
  * `apiAuthPrefix` é um prefixo usado para identificar rotas de API que tratam de autenticação.

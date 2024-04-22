@@ -1,10 +1,12 @@
+
 "use server";
 import bcrypt from "bcrypt";
 import { RegisterShema } from "@/schema";
 import * as z from "zod";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
-
+import { generateVerificationToken } from "@/lib/token";
+import { sendVerificationEmail } from "@/lib/email";
 
 export const register = async (values: z.infer<typeof RegisterShema>) => {
   const validatedFields = RegisterShema.safeParse(values);
@@ -31,7 +33,10 @@ export const register = async (values: z.infer<typeof RegisterShema>) => {
       password: hashedPassword,
     },
   });
+
+  const vericantionToken = await generateVerificationToken(email);
+  await sendVerificationEmail(vericantionToken.email, vericantionToken.token);
   return {
-    success: "User created!",
+    success: "Confirmar seu E-mail",
   };
 };
