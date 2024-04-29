@@ -4,7 +4,7 @@
  * Por exemplo, a rota raiz "/" é uma rota pública.
  * @type {string[]}
  */
-export const publicRoutes = ["/"];
+export const publicRoutes = ["/", "/auth/new-verification"];
 
 /**
  * `authRoutes` especifica as rotas que exigem que o usuário esteja autenticado para acessar.
@@ -12,7 +12,13 @@ export const publicRoutes = ["/"];
  * Exemplos incluem rotas como "/auth/login" e "/auth/register", que são usadas para o processo de login e registro.
  * @type {string[]}
  */
-export const authRoutes = ["/auth/login", "/auth/register", '/auth/error'];
+export const authRoutes = [
+  "/auth/login",
+  "/auth/register",
+  "/auth/error",
+  "/auth/reset",
+  '/auth/new-password',
+];
 
 /**
  * `apiAuthPrefix` é um prefixo usado para identificar rotas de API que tratam de autenticação.

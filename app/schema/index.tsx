@@ -1,14 +1,26 @@
 import { z } from "zod";
 
 
+export const NewPasswordShema = z.object({
+  password: z.string().min(1, {
+    message: "Senha é obrigatoria",
+  }),
+});
+
+export const ResetShema = z.object({
+  email: z.string().email({
+    message: "Email é obrigatorio",
+  }),
+});
+
 export const LoginShema = z.object({
-    email: z.string().email({
-        message: 'Email é obrigatorio'
-    }),
-    password: z.string().min(1, {
-        message: "Senha é obrigatoria"
-    })
-})
+  email: z.string().email({
+    message: "Email é obrigatorio",
+  }),
+  password: z.string().min(1, {
+    message: "Senha é obrigatoria",
+  }),
+});
 
 export const RegisterShema = z.object({
   email: z.string().email({
