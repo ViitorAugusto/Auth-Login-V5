@@ -20,6 +20,7 @@ export const LoginShema = z.object({
   password: z.string().min(1, {
     message: "Senha é obrigatoria",
   }),
+  code: z.optional(z.string()),
 });
 
 export const RegisterShema = z.object({
