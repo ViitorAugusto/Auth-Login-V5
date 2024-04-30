@@ -25,4 +25,3 @@ export const getTwoFactorTokenByEmail = async (email: string) => {
     return null;
   }
 };
-

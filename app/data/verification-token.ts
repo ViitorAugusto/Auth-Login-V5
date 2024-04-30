@@ -13,7 +13,6 @@ export const getVericationTokenByToken = async (token: string) => {
   }
 };
 
-
 export const getVericationTokenByEmail = async (email: string) => {
   try {
     const vericationEmail = await db.vericantionToken.findFirst({
