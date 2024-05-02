@@ -1,5 +1,5 @@
-import GitHub from "next-auth/providers/github";
-import NextAuth, { DefaultSession } from "next-auth";
+
+import NextAuth from "next-auth";
 import authConfig from "@/auth.config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/lib/db";
@@ -21,10 +21,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     async signIn({ user, account }) {
-      console.log({
-        user,
-        account,
-      });
+      // console.log({
+      //   user,
+      //   account,
+      // });
       if (account?.provider !== "credentials") return true;
 
       const existingUser = await getUserById(user.id as string);
@@ -52,7 +52,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (token.role && session.user) {
         session.user.role = token.role as UserRole;
       }
-      console.log({ session, token });
+      if (session.user) {
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+      }
+       if (session.user) {
+         session.user.id = token.id as string;
+       }
+      // console.log({ session, token });
+      console.log("qual meu retorno aqui ?", session);
       return session;
     },
     async jwt({ token }) {
@@ -60,7 +67,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const existingUser = await getUserById(token.sub);
       if (!existingUser) return token;
       token.role = existingUser.role;
-      console.log({ token });
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+      token.id = existingUser.id;
+      // console.log({ token });
       return token;
     },
   },

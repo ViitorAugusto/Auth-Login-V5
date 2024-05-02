@@ -7,7 +7,7 @@ const SettingsPage =  () => {
 
   return (
     <>
-      <div>{JSON.stringify(session)}</div>
+      <pre>{JSON.stringify(session, null, 2)}</pre>
     
     </>
   );
